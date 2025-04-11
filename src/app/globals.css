@@ -2,26 +2,159 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@font-face {
+  font-family: "Manjari";
+  src: url("/fonts/Manjari-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@font-face {
+  font-family: "Manjari";
+  src: url("/fonts/Manjari-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TT Ramillas";
+  src: url("/fonts/TTRamillas-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --background: #fffbca;
+  --foreground: #603c00;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Manjari", Arial, sans-serif;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-playfair;
   }
+
+  p {
+    @apply font-manjari;
+  }
+}
+
+@layer components {
+  .celestial-container {
+    @apply container mx-auto px-4 md:px-8 lg:px-16 max-w-7xl;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl lg:text-5xl font-playfair font-semibold text-celestial-brown mb-6 relative;
+  }
+
+  /* .section-title::after {
+    content: "";
+    @apply block w-24 h-1 bg-celestial-blue mt-2;
+  } */
+
+  .celestial-button {
+    @apply px-6 py-3 bg-celestial-blue text-celestial-brown font-medium rounded-md hover:bg-opacity-80 transition-colors duration-300 inline-block;
+  }
+
+  .celestial-card {
+    @apply bg-white p-6 rounded-[8px] shadow-md border border-celestial-blue;
+  }
+}
+
+.glow-effect {
+  box-shadow: 0 0 8px #c8dcff;
+  transition: box-shadow 0.3s ease;
+}
+
+.glow-effect:hover {
+  box-shadow: 0 0 15px #c8dcff, 0 0 20px #c8dcff;
+}
+
+/* Add these animation classes to your globals.css file */
+
+@keyframes growUnderline {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.nav-link-underline {
+  position: relative;
+}
+
+.nav-link-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--celestial-blue);
+  transition: width 0.3s ease-in-out;
+  border-radius: 2px;
+}
+
+.nav-link-underline:hover::after {
+  width: 100%;
+}
+
+/* Alternative underline animation */
+.nav-link-fancy {
+  position: relative;
+}
+
+.nav-link-fancy::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--celestial-blue);
+  transform-origin: bottom left;
+  transition: transform 0.25s ease-out;
+  border-radius: 2px;
+}
+
+.nav-link-fancy:hover::after {
+  transform: scaleX(1);
+}
+
+/* Improved button hover effect */
+.celestial-button-hover {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.celestial-button-hover::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  transition: width 0.3s ease;
+  z-index: -1;
+}
+
+.celestial-button-hover:hover::before {
+  width: 100%;
 }
