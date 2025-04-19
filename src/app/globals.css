@@ -59,11 +59,6 @@ body {
     @apply text-3xl md:text-4xl lg:text-5xl font-playfair font-semibold text-celestial-brown mb-6 relative;
   }
 
-  /* .section-title::after {
-    content: "";
-    @apply block w-24 h-1 bg-celestial-blue mt-2;
-  } */
-
   .celestial-button {
     @apply px-6 py-3 bg-celestial-blue text-celestial-brown font-medium rounded-md hover:bg-opacity-80 transition-colors duration-300 inline-block;
   }
@@ -157,4 +152,36 @@ body {
 
 .celestial-button-hover:hover::before {
   width: 100%;
+}
+
+/* Estilização para os bullets de paginação do Swiper */
+.swiper-pagination {
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  z-index: 30;
+}
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 0 4px;
+  background-color: rgba(141, 110, 99, 0.5); /* celestial-brown/50 */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  width: 24px;
+  border-radius: 10px;
+  background-color: #8d6e63; /* celestial-brown */
+}
+
+/* Estilização para as setas de navegação */
+.swiper-button-prev,
+.swiper-button-next {
+  display: none;
 }
