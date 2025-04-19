@@ -14,56 +14,52 @@ const Services = () => {
   const services = [
     {
       icon: <HeartHandshake className="w-12 h-12 text-celestial-blue" />,
-      title: "Cerimônia de Despedida",
+      title: "Homenagem de Despedida",
       description:
-        "Ambiente decorado e climatizado para despedida do pet falecido, com espaço para homenagem através de fotos e vídeos, em um local de conforto para os familiares.",
+        "Ambiente exclusivo para realizar homenagens de despedida para pets falecidos. Oferecemos privacidade e todo o suporte necessário para esse momento delicado.",
       details: [
         "Espaço decorado com iluminação suave",
-        "TV para exibição de fotos e vídeos",
-        "Música ambiente",
-        "Espaço para água, chá e café",
+        "Preparação do pet para a homenagem",
+        "Conteúdo visual com fotos e vídeos dos seus momentos especiais juntos",
       ],
     },
     {
       icon: <Syringe className="w-12 h-12 text-celestial-blue" />,
-      title: "Eutanásia Assistida",
+      title: "Eutanásia Humanizada",
       description:
-        "Procedimento de eutanásia humanizada realizado com todo o cuidado e respeito, podendo ser executado em nossa empresa ou a domicílio.",
+        "Procedimento de eutanásia humanizada realizada por médico veterinário, seguindo as diretrizes éticas do Conselho Regional de Medicina Veterinária.",
       details: [
-        "Ambiente calmo e tranquilo",
-        "Procedimento realizado por veterinário especializado",
+        "Ambiente tranquilo e privativo",
         "Opção de acompanhamento dos tutores",
-        "Realização na empresa ou domicílio",
+        "Opção de procedimento em domicílio, visando o conforto do pet",
       ],
     },
     {
       icon: <Star className="w-12 h-12 text-celestial-blue" />,
       title: "Encaminhamento para Cremação",
       description:
-        "Oferecemos serviço de cremação terceirizado, cuidando de todos os procedimentos necessários para garantir que o processo seja realizado com dignidade.",
+        "Oferecemos serviço de cremação terceirizado, cuidando de todos os procedimentos necessários para garantir que o processo seja realizado com agilidade e dignidade.",
       details: [
         "Parceria com crematório especializado",
-        "Opções de urnas para guarda das cinzas",
+        "Opção de retorno de cinzas",
         "Documentação completa do processo",
-        "Retorno das cinzas para o tutor",
       ],
     },
     {
       icon: <Car className="w-12 h-12 text-celestial-blue" />,
-      title: "Recolhimento em Clínicas ou Domicílios",
+      title: "Busca em Clínicas ou Domicílios",
       description:
-        "Serviço de busca em clínicas veterinárias parceiras ou diretamente no domicílio para encaminhamento e realização de cerimônia de despedida.",
+        "Serviço de busca em clínicas veterinárias parceiras ou diretamente no domicílio para a realização de homenagem de despedida.",
       details: [
         "Transporte adequado e respeitoso",
-        "Atendimento rápido",
-        "Flexibilidade de horários",
+        "Atendimento ágil",
         "Discrição e profissionalismo",
       ],
     },
   ];
 
   return (
-    <section id="servicos" className="py-16 md:py-24 bg-celestial-lightBeige">
+    <section id="servicos" className="py-16 md:py-24 bg-celestial-blue">
       <div className="celestial-container">
         <motion.div
           initial="hidden"
@@ -74,11 +70,7 @@ const Services = () => {
           className="text-center mb-12"
         >
           <h2 className="section-title text-center mx-auto">Nossos Serviços</h2>
-          <div className="w-24 h-1 bg-celestial-blue mx-auto mt-2 mb-6"></div>
-          <p className="text-lg max-w-3xl mx-auto">
-            Oferecemos uma variedade de serviços para garantir que a despedida
-            do seu companheiro seja realizada com dignidade, respeito e carinho.
-          </p>
+          <div className="w-24 h-1 bg-celestial-brown mx-auto mt-2 mb-6"></div>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -91,7 +83,7 @@ const Services = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               variants={fadeInUp}
             >
-              <Card className="h-full border-celestial-blue border overflow-hidden group">
+              <Card className="h-full border-neutral-200 border overflow-hidden group">
                 <CardContent className="p-6 h-full flex flex-col">
                   <div className="flex items-center mb-4">
                     <div className="p-3 bg-celestial-blue/10 rounded-full mr-4">

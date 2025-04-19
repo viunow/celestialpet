@@ -77,7 +77,7 @@ const Testimonials = () => {
           <h2 className="section-title text-center mx-auto">
             O Que Dizem Sobre Nós
           </h2>
-          <div className="w-24 h-1 bg-celestial-blue mx-auto mt-2 mb-6"></div>
+          <div className="w-24 h-1 bg-celestial-brown mx-auto mt-2 mb-6"></div>
         </motion.div>
 
         <div className="relative max-w-4xl mx-auto">

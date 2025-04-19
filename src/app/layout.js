@@ -1,6 +1,7 @@
 import { Montserrat, Raleway, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import WhatsappFloating from "./components/WhatsappFloating";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -24,7 +25,7 @@ const playfair = Playfair_Display({
 // (TT Ramillas would need to be loaded via next/font/local)
 
 export const metadata = {
-  title: "Celestial Pet | Homenagens e Cuidado Veterinário",
+  title: "Celestial Pet | Homenagens e Cuidados Paliativos",
   description: "Traduzindo sentimentos em cuidado e homenagens!",
 };
 
@@ -40,6 +41,7 @@ export default function RootLayout({ children }) {
         )}
       >
         {children}
+        <WhatsappFloating />
       </body>
     </html>
   );

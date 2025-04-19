@@ -8,10 +8,11 @@ export default function Logo() {
     <Link href="/" aria-label="Home" className="w-fit">
       <Image
         src={logo.src}
-        width={70}
+        width={60}
         height={80}
         quality={100}
         alt="Logotipo Celestial Pet"
+        className="drop-shadow-lg"
       />
     </Link>
   );

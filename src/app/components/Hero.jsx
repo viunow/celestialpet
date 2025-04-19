@@ -1,65 +1,147 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
-import HeroImage from "../../../public/cachorro-gato.png";
+import { ChevronDown, MessageCircle } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { useInterval } from "@/lib/hooks/useInterval";
+
+import Banner1 from "../../../public/banners/1.jpg";
+import Banner2 from "../../../public/banners/2.jpg";
+import Banner3 from "../../../public/banners/3.jpg";
+import Banner4 from "../../../public/banners/4.jpg";
+import ButtonContact from "./ButtonContact";
 
 const Hero = () => {
   const scrollToAbout = () => {
     document.getElementById("sobre").scrollIntoView({ behavior: "smooth" });
   };
 
+  const [api, setApi] = useState(null);
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap());
+
+    const handleSelect = () => {
+      setCurrent(api.selectedScrollSnap());
+    };
+
+    api.on("select", handleSelect);
+
+    return () => {
+      api.off("select", handleSelect);
+    };
+  }, [api]);
+
+  useInterval(() => {
+    if (api) {
+      api.scrollNext();
+    }
+  }, 5000);
+
   return (
-    <section className="min-h-screen flex items-center justify-center bg-celestial-blue pt-16 relative overflow-hidden">
-      <div className="celestial-container grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+    <section className="min-h-dvh flex items-center justify-center relative overflow-hidden">
+      <div className="absolute z-10 top-0 left-0 w-full h-full">
+        <Carousel
+          setApi={setApi}
+          className="w-full h-full"
+          opts={{
+            loop: true,
+            align: "start",
+          }}
+        >
+          <CarouselContent className="h-dvh">
+            <CarouselItem className="h-full">
+              <Image
+                src={Banner1.src}
+                alt="Celestial Pet - Slide 1"
+                className="w-full h-full object-cover"
+                width={1920}
+                height={1080}
+                priority
+                quality={100}
+              />
+            </CarouselItem>
+            <CarouselItem className="h-full">
+              <Image
+                src={Banner2.src}
+                alt="Celestial Pet - Slide 2"
+                className="w-full h-full object-cover"
+                width={1920}
+                height={1080}
+                quality={100}
+              />
+            </CarouselItem>
+            <CarouselItem className="h-full">
+              <Image
+                src={Banner3.src}
+                alt="Celestial Pet - Slide 3"
+                className="w-full h-full object-cover"
+                width={1920}
+                height={1080}
+                quality={100}
+              />
+            </CarouselItem>
+            <CarouselItem className="h-full">
+              <Image
+                src={Banner4.src}
+                alt="Celestial Pet - Slide 4"
+                className="w-full h-full object-cover"
+                width={1920}
+                height={1080}
+                quality={100}
+              />
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
+      </div>
+
+      <div className="absolute z-30 bottom-20 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        {Array.from({ length: count }).map((_, i) => (
+          <button
+            key={i}
+            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+              i === current ? "bg-celestial-brown w-6" : "bg-celestial-brown/50"
+            }`}
+            onClick={() => api?.scrollTo(i)}
+            aria-label={`Go to slide ${i + 1}`}
+          />
+        ))}
+      </div>
+
+      <div className="absolute z-20 top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-celestial-beige" />
+      <div className="celestial-container grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start pt-28 2xl:pt-40 relative z-30">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="text-center lg:text-left max-w-2xl mx-auto lg:mx-0"
+          className="text-left max-w-2xl mx-auto lg:mx-0"
         >
-          <h1 className="font-playfair text-4xl md:text-5xl lg:text-8xl font-bold text-white mb-4">
-            <span className="block">Celestial</span>
-            <span className="text-celestial-brown">Pet</span>
+          <h1 className="font-playfair text-6xl lg:text-8xl font-bold text-celestial-brown mb-4 drop-shadow-xl flex flex-col">
+            <span>Celestial </span>
+            <span>Pet</span>
           </h1>
 
           <h2 className="font-raleway text-xl md:text-2xl font-medium text-celestial-brown mb-6 italic">
-            Traduzindo sentimentos em homenagens
+            Traduzindo <strong>sentimentos</strong> em cuidado e{" "}
+            <strong>homenagens!</strong>
           </h2>
 
-          <p className="text-celestial-brown text-lg mb-8">
-            Confortando tutores na despedida de seus companheiros, com dignidade
-            e respeito.
-          </p>
-
-          <Button
-            onClick={scrollToAbout}
-            className="bg-white text-celestial-brown hover:bg-opacity-90 shadow-md"
-          >
-            Conheça Nossos Serviços
-          </Button>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="relative hidden lg:block"
-        >
-          <div className="relative w-full aspect-video max-w-[600px] mx-auto">
-            <Image
-              src={HeroImage.src}
-              alt="Celestial Pet"
-              width={600}
-              height={500}
-              className="object-contain rounded-xl drop-shadow-xl contrast-[1.20]"
-              priority
-              quality={100}
-            />
-          </div>
+          <ButtonContact />
         </motion.div>
       </div>
 
@@ -81,10 +163,6 @@ const Hero = () => {
           onClick={scrollToAbout}
         />
       </motion.div>
-
-      {/* Decorative elements */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-celestial-beige rounded-full opacity-20 -translate-y-1/3 translate-x-1/3"></div>
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-celestial-lightBeige rounded-full opacity-20 translate-y-1/3 -translate-x-1/3"></div>
     </section>
   );
 };
