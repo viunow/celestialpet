@@ -1,0 +1,6 @@
+# robots.txt para celestialpet.com.br
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.celestialpet.com.br/sitemap.xml
