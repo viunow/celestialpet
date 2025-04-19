@@ -38,7 +38,16 @@ const Header = () => {
         onClick={() => scrollToSection(href)}
         className="text-celestial-brown relative group transition-colors overflow-hidden"
       >
-        <span>{label}</span>
+        <span
+          className={`${
+            isScrolled ? "text-celestial-brown" : "text-white"
+          } text-lg font-semibold`}
+          style={{
+            textShadow: isScrolled ? "none" : "0 1px 2px rgba(0, 0, 0, 0.7)",
+          }}
+        >
+          {label}
+        </span>
         <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-celestial-brown/40 group-hover:w-full transition-all duration-500 ease-in-out"></span>
       </button>
     );
@@ -84,10 +93,10 @@ const Header = () => {
         >
           <NavLink href="sobre" label="Sobre" />
           <NavLink href="servicos" label="Serviços" />
-          <NavLink href="depoimentos" label="Depoimentos" />
+          {/* <NavLink href="depoimentos" label="Depoimentos" /> */}
           <Button
             onClick={() => scrollToSection("contato")}
-            className="bg-celestial-blue text-celestial-brown hover:bg-celestial-blue/80"
+            className="bg-celestial-blue text-celestial-brown hover:bg-celestial-blue/80 hover:drop-shadow-lg transition-all duration-300 ease-in-out"
           >
             Contato
           </Button>
@@ -118,7 +127,7 @@ const Header = () => {
           <div className="celestial-container py-4 flex flex-col space-y-4">
             <MobileNavLink href="sobre" label="Sobre" />
             <MobileNavLink href="servicos" label="Serviços" />
-            <MobileNavLink href="depoimentos" label="Depoimentos" />
+            {/* <MobileNavLink href="depoimentos" label="Depoimentos" /> */}
             <Button
               onClick={() => scrollToSection("contato")}
               className="bg-celestial-blue text-celestial-brown hover:bg-celestial-blue/80 w-full"

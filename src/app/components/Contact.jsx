@@ -2,10 +2,12 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, Instagram } from "lucide-react";
+import { Phone, Mail, MapPin, Instagram, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import Link from "next/link";
+import ButtonContact from "./ButtonContact";
 
 const Contact = () => {
   const fadeInUp = {
@@ -13,36 +15,9 @@ const Contact = () => {
     visible: { opacity: 1, y: 0 },
   };
 
-  const contactInfos = [
-    {
-      icon: <Phone className="w-5 h-5 text-celestial-blue" />,
-      title: "Telefone",
-      info: "(54) 99692-5823",
-      link: "tel:+5554996925823",
-    },
-    {
-      icon: <Mail className="w-5 h-5 text-celestial-blue" />,
-      title: "Email",
-      info: "contato@celestialpet.com.br",
-      link: "mailto:contato@celestialpet.com.br",
-    },
-    {
-      icon: <MapPin className="w-5 h-5 text-celestial-blue" />,
-      title: "Endereço",
-      info: "Caxias do Sul, RS",
-      link: "https://maps.google.com/?q=Caxias+do+Sul,RS",
-    },
-    {
-      icon: <Instagram className="w-5 h-5 text-celestial-blue" />,
-      title: "Instagram",
-      info: "@celestialpetcaxias",
-      link: "https://instagram.com/celestialpetcaxias",
-    },
-  ];
-
   return (
     <section id="contato" className="py-16 md:py-24 bg-celestial-beige">
-      <div className="celestial-container">
+      <div className="celestial-container flex flex-col items-center">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -54,14 +29,16 @@ const Contact = () => {
           <h2 className="section-title text-center mx-auto">
             Entre em Contato
           </h2>
-          <div className="w-24 h-1 bg-celestial-blue mx-auto mt-2 mb-6"></div>
+          <div className="w-24 h-1 bg-celestial-brown mx-auto mt-2 mb-6"></div>
           <p className="text-lg max-w-2xl mx-auto">
             Estamos aqui para ajudar você neste momento difícil. Entre em
             contato conosco para mais informações sobre nossos serviços.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <ButtonContact />
+
+        {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -182,7 +159,7 @@ const Contact = () => {
               </ul>
             </div>
           </motion.div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

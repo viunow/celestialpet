@@ -43,10 +43,22 @@ const About = () => {
           <h2 className="section-title text-center mx-auto">
             Sobre a Celestial Pet
           </h2>
-          <div className="w-24 h-1 bg-celestial-blue mx-auto mt-2 mb-6"></div>
+          <div className="w-24 h-1 bg-celestial-brown mx-auto mt-2 mb-6"></div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="w-full flex flex-col gap-4 text-lg">
+          <h2 className="text-center">
+            Localizada em Caxias do Sul, a Celestial Pet foi fundada com o
+            objetivo de confortar tutores ao passar pela perda por falecimento
+            de pets. Ressignificamos o processo de despedida, proporcionando
+            dignidade, conforto e compaixão aos pets e seus tutores.
+          </h2>
+          <h2 className="text-center">
+            Somos especializados em cuidados paliativos para cães e gatos,
+            visando o bem-estar, controle de dor e conforto.
+          </h2>
+        </div>
+        {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -104,7 +116,7 @@ const About = () => {
               ))}
             </div>
           </motion.div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

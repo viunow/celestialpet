@@ -14,35 +14,10 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <Logo />
-            <p className="text-celestial-brown mb-4 max-w-xs">
-              Confortando tutores na despedida de seus companheiros, com
-              dignidade e respeito.
+            <p className="text-celestial-brown my-4 max-w-xs">
+              Traduzindo sentimentos e cuidado em homenagens!
+              <br />
             </p>
-            <div className="flex space-x-4">
-              <a
-                href="https://instagram.com/celestialpetcaxias"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 bg-white rounded-full text-celestial-blue hover:bg-opacity-90 transition-colors"
-                aria-label="Instagram"
-              >
-                <Instagram size={20} />
-              </a>
-              <a
-                href="mailto:contato@celestialpet.com.br"
-                className="p-2 bg-white rounded-full text-celestial-blue hover:bg-opacity-90 transition-colors"
-                aria-label="Email"
-              >
-                <Mail size={20} />
-              </a>
-              <a
-                href="tel:+5554996925823"
-                className="p-2 bg-white rounded-full text-celestial-blue hover:bg-opacity-90 transition-colors"
-                aria-label="Telefone"
-              >
-                <Phone size={20} />
-              </a>
-            </div>
           </div>
 
           <div>
@@ -66,14 +41,14 @@ const Footer = () => {
                   Nossos Serviços
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a
                   href="#depoimentos"
                   className="text-celestial-brown hover:text-white transition-colors"
                 >
                   Depoimentos
                 </a>
-              </li>
+              </li> */}
               <li>
                 <a
                   href="#contato"
