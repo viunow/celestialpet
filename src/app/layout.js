@@ -95,31 +95,6 @@ export default function RootLayout({ children }) {
                 postalCode: "95010-100",
                 addressCountry: "BR",
               },
-              geo: {
-                "@type": "GeoCoordinates",
-                latitude: -29.1737281,
-                longitude: -51.164309,
-              },
-              openingHoursSpecification: [
-                {
-                  "@type": "OpeningHoursSpecification",
-                  dayOfWeek: [
-                    "Monday",
-                    "Tuesday",
-                    "Wednesday",
-                    "Thursday",
-                    "Friday",
-                  ],
-                  opens: "08:00",
-                  closes: "18:00",
-                },
-                {
-                  "@type": "OpeningHoursSpecification",
-                  dayOfWeek: "Saturday",
-                  opens: "09:00",
-                  closes: "13:00",
-                },
-              ],
               priceRange: "",
               areaServed: {
                 "@type": "City",
