@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Phone, Mail, Instagram } from "lucide-react";
+import { Phone, Mail, Instagram, MapPin } from "lucide-react";
 import Logo from "./Logo";
 import Link from "next/link";
 
@@ -21,7 +21,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-playfair text-xl text-white mb-4">
+            <h4 className="font-playfair text-xl text-celestial-brown mb-4">
               Links Rápidos
             </h4>
             <ul className="space-y-2">
@@ -61,7 +61,9 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-playfair text-xl text-white mb-4">Contato</h4>
+            <h4 className="font-playfair text-xl text-celestial-brown mb-4">
+              Contato
+            </h4>
             <ul className="space-y-3">
               <li className="flex items-center">
                 <Link
@@ -98,6 +100,21 @@ const Footer = () => {
                   <Instagram size={16} className="text-white mr-2" />
                   <span className="text-celestial-brown hover:text-white transition-colors">
                     @celestialpetcaxias
+                  </span>
+                </Link>
+              </li>
+              <li className="flex items-start">
+                <Link
+                  href="https://maps.app.goo.gl/35T7kZRpjLjXw7hr9"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start"
+                  aria-label="Ver localização no Google Maps"
+                >
+                  <MapPin size={16} className="text-white mr-2 mt-1" />
+                  <span className="text-celestial-brown hover:text-white transition-colors">
+                    R. Tronca, 965 - Rio Branco, <br />
+                    Caxias do Sul - RS, 95010-100
                   </span>
                 </Link>
               </li>
