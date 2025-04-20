@@ -1,54 +1,54 @@
-import { Montserrat, Raleway, Playfair_Display } from "next/font/google";
-import "./globals.css";
-import { cn } from "@/lib/utils";
-import WhatsappFloating from "./components/WhatsappFloating";
-import Script from "next/script";
-import { Analytics } from "@vercel/analytics/react";
+import { Montserrat, Raleway, Playfair_Display } from 'next/font/google';
+import './globals.css';
+import { cn } from '@/lib/utils';
+import WhatsappFloating from './components/WhatsappFloating';
+import Script from 'next/script';
+import { Analytics } from '@vercel/analytics/react';
 
 const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--font-montserrat",
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ['latin'],
+  variable: '--font-montserrat',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
 
 const raleway = Raleway({
-  subsets: ["latin"],
-  variable: "--font-raleway",
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ['latin'],
+  variable: '--font-raleway',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
 
 const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-  weight: ["400", "500", "600", "700", "900"],
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  weight: ['400', '500', '600', '700', '900'],
 });
 
 export function generateMetadata() {
   return {
-    title: "Celestial Pet | Homenagens e Cuidados Paliativos",
-    description: "Traduzindo sentimentos em cuidado e homenagens!",
-    metadataBase: new URL("https://www.celestialpet.com.br"),
+    title: 'Celestial Pet | Homenagens e Cuidados Paliativos',
+    description: 'Traduzindo sentimentos em cuidado e homenagens!',
+    metadataBase: new URL('https://www.celestialpet.com.br'),
     openGraph: {
-      title: "Celestial Pet | Homenagens e Cuidados Paliativos",
-      description: "Traduzindo sentimentos em cuidado e homenagens!",
-      url: "https://www.celestialpet.com.br",
-      siteName: "Celestial Pet",
+      title: 'Celestial Pet | Homenagens e Cuidados Paliativos',
+      description: 'Traduzindo sentimentos em cuidado e homenagens!',
+      url: 'https://www.celestialpet.com.br',
+      siteName: 'Celestial Pet',
       images: [
         {
-          url: "/og.png",
+          url: '/og.png',
           width: 1200,
           height: 630,
-          alt: "Celestial Pet - Homenagens e Cuidados Paliativos",
+          alt: 'Celestial Pet - Homenagens e Cuidados Paliativos',
         },
       ],
-      locale: "pt_BR",
-      type: "website",
+      locale: 'pt_BR',
+      type: 'website',
     },
     twitter: {
-      card: "summary_large_image",
-      title: "Celestial Pet | Homenagens e Cuidados Paliativos",
-      description: "Traduzindo sentimentos em cuidado e homenagens!",
-      images: ["/og.png"],
+      card: 'summary_large_image',
+      title: 'Celestial Pet | Homenagens e Cuidados Paliativos',
+      description: 'Traduzindo sentimentos em cuidado e homenagens!',
+      images: ['/og.png'],
     },
   };
 }
@@ -73,76 +73,90 @@ export default function RootLayout({ children }) {
           `}
         </Script>
 
+        {/* Google Analytics 4 (GA4) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-8R8TPJTPWH"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-8R8TPJTPWH');
+          `}
+        </Script>
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "VeterinaryCare",
-              name: "Celestial Pet",
+              '@context': 'https://schema.org',
+              '@type': 'VeterinaryCare',
+              name: 'Celestial Pet',
               description:
-                "Serviços especializados de cuidados paliativos e homenagens para pets falecidos, traduzindo sentimentos em cuidado e homenagens.",
-              url: "https://www.celestialpet.com.br",
-              logo: "https://www.celestialpet.com.br/logo2-com-fundo.png",
-              image: "https://www.celestialpet.com.br/og.png",
-              telephone: "+55 54 996925823",
-              email: "contato@celestialpet.com.br",
+                'Serviços especializados de cuidados paliativos e homenagens para pets falecidos, traduzindo sentimentos em cuidado e homenagens.',
+              url: 'https://www.celestialpet.com.br',
+              logo: 'https://www.celestialpet.com.br/logo2-com-fundo.png',
+              image: 'https://www.celestialpet.com.br/og.png',
+              telephone: '+55 54 996925823',
+              email: 'contato@celestialpet.com.br',
               address: {
-                "@type": "PostalAddress",
-                streetAddress: " R. Tronca, 965 - Rio Branco",
-                addressLocality: "Caxias do Sul",
-                addressRegion: "RS",
-                postalCode: "95010-100",
-                addressCountry: "BR",
+                '@type': 'PostalAddress',
+                streetAddress: ' R. Tronca, 965 - Rio Branco',
+                addressLocality: 'Caxias do Sul',
+                addressRegion: 'RS',
+                postalCode: '95010-100',
+                addressCountry: 'BR',
               },
-              priceRange: "",
+              priceRange: '',
               areaServed: {
-                "@type": "City",
-                name: "Caxias do Sul",
+                '@type': 'City',
+                name: 'Caxias do Sul',
               },
               hasOfferCatalog: {
-                "@type": "OfferCatalog",
-                name: "Serviços Celestial Pet",
+                '@type': 'OfferCatalog',
+                name: 'Serviços Celestial Pet',
                 itemListElement: [
                   {
-                    "@type": "Offer",
+                    '@type': 'Offer',
                     itemOffered: {
-                      "@type": "Service",
-                      name: "Homenagem de Despedida",
+                      '@type': 'Service',
+                      name: 'Homenagem de Despedida',
                       description:
-                        "Ambiente exclusivo para realizar homenagens de despedida para pets falecidos. Oferecemos privacidade e todo o suporte necessário para esse momento delicado.",
+                        'Ambiente exclusivo para realizar homenagens de despedida para pets falecidos. Oferecemos privacidade e todo o suporte necessário para esse momento delicado.',
                     },
                   },
                   {
-                    "@type": "Offer",
+                    '@type': 'Offer',
                     itemOffered: {
-                      "@type": "Service",
-                      name: "Eutanásia Humanizada",
+                      '@type': 'Service',
+                      name: 'Eutanásia Humanizada',
                       description:
-                        "Procedimento de eutanásia humanizada realizada por médico veterinário, seguindo as diretrizes éticas do Conselho Regional de Medicina Veterinária.",
+                        'Procedimento de eutanásia humanizada realizada por médico veterinário, seguindo as diretrizes éticas do Conselho Regional de Medicina Veterinária.',
                     },
                   },
                   {
-                    "@type": "Offer",
+                    '@type': 'Offer',
                     itemOffered: {
-                      "@type": "Service",
-                      name: "Encaminhamento para Cremação",
+                      '@type': 'Service',
+                      name: 'Encaminhamento para Cremação',
                       description:
-                        "Oferecemos serviço de cremação terceirizado, cuidando de todos os procedimentos necessários para garantir que o processo seja realizado com agilidade e dignidade.",
+                        'Oferecemos serviço de cremação terceirizado, cuidando de todos os procedimentos necessários para garantir que o processo seja realizado com agilidade e dignidade.',
                     },
                   },
                   {
-                    "@type": "Offer",
+                    '@type': 'Offer',
                     itemOffered: {
-                      "@type": "Service",
-                      name: "Busca em Clínicas ou Domicílios",
+                      '@type': 'Service',
+                      name: 'Busca em Clínicas ou Domicílios',
                       description:
-                        "Serviço de busca em clínicas veterinárias parceiras ou diretamente no domicílio para a realização de homenagem de despedida.",
+                        'Serviço de busca em clínicas veterinárias parceiras ou diretamente no domicílio para a realização de homenagem de despedida.',
                     },
                   },
                 ],
               },
-              sameAs: ["https://www.instagram.com/celestialpetcaxias"],
+              sameAs: ['https://www.instagram.com/celestialpetcaxias'],
             }),
           }}
         />
@@ -152,7 +166,7 @@ export default function RootLayout({ children }) {
           montserrat.variable,
           raleway.variable,
           playfair.variable,
-          "antialiased font-manjari bg-white text-celestial-brown"
+          'antialiased font-manjari bg-white text-celestial-brown',
         )}
       >
         {/* Google Tag Manager (noscript) */}
@@ -161,7 +175,7 @@ export default function RootLayout({ children }) {
             src="https://www.googletagmanager.com/ns.html?id=GTM-TNBGWJKR"
             height="0"
             width="0"
-            style={{ display: "none", visibility: "hidden" }}
+            style={{ display: 'none', visibility: 'hidden' }}
           ></iframe>
         </noscript>
         {/* End Google Tag Manager (noscript) */}
