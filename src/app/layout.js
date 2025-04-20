@@ -78,7 +78,7 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "VeterinaryService",
+              "@type": "VeterinaryCare",
               name: "Celestial Pet",
               description:
                 "Serviços especializados de cuidados paliativos e homenagens para pets falecidos, traduzindo sentimentos em cuidado e homenagens.",
