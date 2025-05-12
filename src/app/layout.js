@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import WhatsappFloating from "./components/WhatsappFloating";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
-import VisitorTracker from "./components/VisitorTracker";
+import Visitor from "./components/Visitor";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -183,7 +183,7 @@ export default function RootLayout({ children }) {
 
         {children}
         <WhatsappFloating />
-        <VisitorTracker />
+        <Visitor />
         <Analytics />
       </body>
     </html>

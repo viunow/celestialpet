@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-const VisitorTracker = () => {
+const Visitor = () => {
   const hasTracked = useRef(false);
 
   useEffect(() => {
@@ -17,8 +17,21 @@ const VisitorTracker = () => {
             navigator.userAgent
           );
         if (isBot) {
-          //console.log("Bot detectado, pulando tracking");
           return;
+        }
+
+        // Gerar identificador único para esta sessão
+        let sessionId = sessionStorage.getItem("session_id");
+        if (!sessionId) {
+          sessionId = crypto.randomUUID();
+          sessionStorage.setItem("session_id", sessionId);
+        }
+
+        // Gerar identificador único do visitante (persistente entre sessões)
+        let visitorId = localStorage.getItem("visitor_id");
+        if (!visitorId) {
+          visitorId = crypto.randomUUID();
+          localStorage.setItem("visitor_id", visitorId);
         }
 
         // Verifica se já foi registrado nesta sessão
@@ -32,35 +45,25 @@ const VisitorTracker = () => {
 
           // 2 horas em milissegundos: 2 * 60 * 60 * 1000 = 7200000
           if (timeDiff < 7200000) {
-            //console.log("Visitante já rastreado nos últimos 2h");
             return;
           }
         }
 
-        //console.log("Iniciando tracking do visitante...");
-
         // Obtém IP do servidor
         const ipResponse = await fetch("/api/client");
         if (!ipResponse.ok) {
-          throw new Error(`Erro na API: ${ipResponse.status}`);
+          // throw new Error(`Erro na API: ${ipResponse.status}`);
         }
-        const { ip } = await ipResponse.json();
-        //console.log("IP obtido:", ip);
+        const { ip, debug } = await ipResponse.json();
 
         // Obtém dados de geolocalização
         let locationData = null;
         try {
-          //console.log("🔍 Obtendo geolocalização para IP:", ip);
-
-          // Usa a API proxy interna que não tem problema com HTTPS
           const apiUrl = `/api/geo?ip=${ip}`;
-          //console.log("📞 Chamando API proxy:", apiUrl);
-
           const geoResponse = await fetch(apiUrl);
 
           if (geoResponse.ok) {
             const geoData = await geoResponse.json();
-            //console.log("✅ Dados de geolocalização:", geoData);
 
             if (geoData.status === "success") {
               locationData = {
@@ -80,28 +83,33 @@ const VisitorTracker = () => {
                 isHosting: geoData.hosting,
                 actualIP: geoData.query,
               };
-            } else {
-              //console.warn("⚠️ API retornou falha:", geoData);
             }
           }
         } catch (error) {
-          //console.warn("⚠️ Erro ao obter geolocalização:", error);
+          // console.warn("⚠️ Erro ao obter geolocalização:", error);
         }
 
-        // Coleta informações do navegador
         const browserInfo = {
           userAgent: navigator.userAgent,
           language: navigator.language,
+          languages: navigator.languages,
           screen: `${screen.width}x${screen.height}`,
+          colorDepth: screen.colorDepth,
+          pixelDepth: screen.pixelDepth,
           referrer: document.referrer || "Direct",
           platform: navigator.platform,
           onLine: navigator.onLine,
           cookieEnabled: navigator.cookieEnabled,
+          doNotTrack: navigator.doNotTrack,
+          hardwareConcurrency: navigator.hardwareConcurrency,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          viewport: `${window.innerWidth}x${window.innerHeight}`,
         };
 
-        //console.log("Enviando dados para API...");
+        const visitCount =
+          parseInt(localStorage.getItem("visit_count") || "0") + 1;
+        localStorage.setItem("visit_count", visitCount.toString());
 
-        // Envia dados para a API
         const response = await fetch("/api/visitor", {
           method: "POST",
           headers: {
@@ -111,7 +119,14 @@ const VisitorTracker = () => {
             ip,
             location: locationData,
             browserInfo,
+            sessionId,
+            visitorId,
+            visitCount,
+            isReturningVisitor: visitCount > 1,
+            ipDetectionDebug: debug,
             timestamp: new Date().toISOString(),
+            pageUrl: window.location.href,
+            pageTitle: document.title,
           }),
         });
 
@@ -125,7 +140,6 @@ const VisitorTracker = () => {
         }
 
         const result = await response.json();
-        //console.log("Dados enviados com sucesso!", result);
 
         // Marca como rastreado nesta sessão com timestamp
         sessionStorage.setItem("visitor_tracked", "true");
@@ -145,4 +159,4 @@ const VisitorTracker = () => {
   return null; // Componente invisível
 };
 
-export default VisitorTracker;
+export default Visitor;

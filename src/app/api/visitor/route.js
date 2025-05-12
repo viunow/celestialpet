@@ -4,10 +4,21 @@ import nodemailer from "nodemailer";
 
 export async function POST(request) {
   try {
-    //console.log("=== INICIANDO ENVIO DE EMAIL ===");
-    const { ip, location, browserInfo, timestamp } = await request.json();
+    const {
+      ip,
+      location,
+      browserInfo,
+      sessionId,
+      visitorId,
+      visitCount,
+      isReturningVisitor,
+      ipDetectionDebug,
+      timestamp,
+      pageUrl,
+      pageTitle,
+    } = await request.json();
 
-    new Date(timestamp).toLocaleDateString("pt-BR", {
+    const formattedDate = new Date(timestamp).toLocaleDateString("pt-BR", {
       timeZone: "America/Sao_Paulo",
       year: "numeric",
       month: "2-digit",
@@ -25,18 +36,7 @@ export async function POST(request) {
       );
     }
 
-    // Debug das variáveis de ambiente
-    // //console.log("MAILTRAP_USER:", process.env.MAILTRAP_USER);
-    // //console.log(
-    //   "MAILTRAP_PASS:",
-    //   process.env.MAILTRAP_PASS
-    //     ? "***" + process.env.MAILTRAP_PASS.slice(-4)
-    //     : "Não configurado"
-    // );
-
-    // Verificar se as variáveis estão definidas
     if (!process.env.MAILTRAP_USER || !process.env.MAILTRAP_PASS) {
-      // console.error("Variáveis do Mailtrap não configuradas!");
       return NextResponse.json(
         {
           message: "Configuração de email incompleta",
@@ -47,7 +47,6 @@ export async function POST(request) {
     }
 
     // Configurando transporter com Mailtrap
-    // //console.log("Configurando transporter com Mailtrap...");
     const transporter = nodemailer.createTransport({
       host: "sandbox.smtp.mailtrap.io",
       port: 2525,
@@ -60,19 +59,41 @@ export async function POST(request) {
     });
 
     // Verificar a conexão
-    // //console.log("Verificando conexão...");
     await transporter.verify();
-    // //console.log("Conexão verificada com sucesso!");
 
     // Formatação dos dados para o email
     const emailBody = `
       <html>
         <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #8B4513;">Novo Visitante</h2>
-          <p><strong>⏰ Timestamp:</strong> ${new Date(
-            timestamp
-          ).toLocaleString("pt-BR")}</p>
-          <p><strong>🌐 IP:</strong> ${ip}</p>
+          <h2 style="color: #8B4513;">Novo Visitante${
+            isReturningVisitor ? " (Retornando)" : " (Primeiro Acesso)"
+          }</h2>
+          
+          <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+            <h3 style="color: #8B4513; margin-top: 0;">🔍 Informações da Sessão</h3>
+            <p><strong>⏰ Timestamp:</strong> ${formattedDate}</p>
+            <p><strong>🌐 IP:</strong> ${ip}</p>
+            <p><strong>🆔 ID da Sessão:</strong> ${sessionId}</p>
+            <p><strong>👤 ID do Visitante:</strong> ${visitorId}</p>
+            <p><strong>📊 Número da Visita:</strong> ${visitCount}</p>
+            <p><strong>📄 Página:</strong> ${pageTitle || "N/A"}</p>
+            <p><strong>🔗 URL:</strong> ${pageUrl || "N/A"}</p>
+          </div>
+          
+          ${
+            ipDetectionDebug
+              ? `
+            <div style="background-color: #fff3cd; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+              <h3 style="color: #856404; margin-top: 0;">🔧 Debug IP Detection</h3>
+              <pre style="background-color: #fff; padding: 10px; border-radius: 3px; font-size: 12px; overflow-x: auto;">${JSON.stringify(
+                ipDetectionDebug,
+                null,
+                2
+              )}</pre>
+            </div>
+            `
+              : ""
+          }
           
           ${
             location
@@ -87,6 +108,15 @@ export async function POST(request) {
                 location.timezone || "N/A"
               }</li>
               <li><strong>ISP:</strong> ${location.isp || "N/A"}</li>
+              <li><strong>Organização:</strong> ${
+                location.organization || "N/A"
+              }</li>
+              <li><strong>Proxy/VPN:</strong> ${
+                location.isProxy ? "Sim" : "Não"
+              }</li>
+              <li><strong>Mobile:</strong> ${
+                location.isMobile ? "Sim" : "Não"
+              }</li>
             </ul>
           `
               : "<p>Dados de localização não disponíveis (localhost)</p>"
@@ -108,6 +138,18 @@ export async function POST(request) {
               <li><strong>Plataforma:</strong> ${
                 browserInfo.platform || "N/A"
               }</li>
+              <li><strong>Fuso Horário Local:</strong> ${
+                browserInfo.timezone || "N/A"
+              }</li>
+              <li><strong>Núcleos do Processador:</strong> ${
+                browserInfo.hardwareConcurrency || "N/A"
+              }</li>
+              <li><strong>Cookies Habilitados:</strong> ${
+                browserInfo.cookieEnabled ? "Sim" : "Não"
+              }</li>
+              <li><strong>Do Not Track:</strong> ${
+                browserInfo.doNotTrack || "N/A"
+              }</li>
             </ul>
           `
               : ""
@@ -121,24 +163,28 @@ export async function POST(request) {
       </html>
     `;
 
+    // Definir assunto do email
+    const subject = isReturningVisitor
+      ? `🔄 Visitante Retornando - ${
+          location?.city || ip
+        } (${visitCount}ª visita)`
+      : `🆕 Novo Visitante - ${location?.city || ip}`;
+
     // Enviar email
-    //console.log("Enviando email...");
     const info = await transporter.sendMail({
-      from: "Test <test@example.com>",
+      from: "CelestialPet Tracking <test@example.com>",
       to: "test@example.com",
-      subject: `Novo Visitante - ${
-        location?.city || "Localização desconhecida"
-      }`,
+      subject: subject,
       html: emailBody,
     });
 
-    //console.log("Email enviado com sucesso:", info.messageId);
     return NextResponse.json({
       message: "Dados enviados com sucesso",
       messageId: info.messageId,
+      sessionId,
     });
   } catch (error) {
-    //console.error("Erro detalhado:", error);
+    // console.error("Erro detalhado:", error);
     return NextResponse.json(
       {
         message: "Erro interno do servidor",
