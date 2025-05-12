@@ -7,6 +7,16 @@ export async function POST(request) {
     //console.log("=== INICIANDO ENVIO DE EMAIL ===");
     const { ip, location, browserInfo, timestamp } = await request.json();
 
+    new Date(timestamp).toLocaleDateString("pt-BR", {
+      timeZone: "America/Sao_Paulo",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+
     // Validação básica
     if (!ip) {
       return NextResponse.json(

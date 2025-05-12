@@ -50,56 +50,39 @@ const VisitorTracker = () => {
         // Obtém dados de geolocalização
         let locationData = null;
         try {
-          // Em desenvolvimento (localhost), vamos pular a geolocalização
-          if (ip !== "localhost" && ip !== "127.0.0.1" && ip !== "::1") {
-            //console.log("🔍 Obtendo geolocalização para IP:", ip);
+          //console.log("🔍 Obtendo geolocalização para IP:", ip);
 
-            // URL da API com os campos específicos
-            const fields =
-              "status,country,countryCode,regionName,city,zip,lat,lon,timezone,isp,org,proxy,mobile,hosting,as,query";
-            const apiUrl = `https://ip-api.com/json/${ip}?fields=${fields}`;
-            //console.log("📞 Chamando API:", apiUrl);
+          // Usa a API proxy interna que não tem problema com HTTPS
+          const apiUrl = `/api/geo?ip=${ip}`;
+          //console.log("📞 Chamando API proxy:", apiUrl);
 
-            const geoResponse = await fetch(apiUrl);
+          const geoResponse = await fetch(apiUrl);
 
-            if (geoResponse.ok) {
-              const geoData = await geoResponse.json();
-              //console.log("✅ Dados de geolocalização:", geoData);
+          if (geoResponse.ok) {
+            const geoData = await geoResponse.json();
+            //console.log("✅ Dados de geolocalização:", geoData);
 
-              if (geoData.status === "success") {
-                locationData = {
-                  country: geoData.country,
-                  countryCode: geoData.countryCode,
-                  region: geoData.regionName,
-                  city: geoData.city,
-                  zip: geoData.zip,
-                  latitude: geoData.lat,
-                  longitude: geoData.lon,
-                  timezone: geoData.timezone,
-                  isp: geoData.isp,
-                  organization: geoData.org,
-                  asNumber: geoData.as,
-                  isProxy: geoData.proxy,
-                  isMobile: geoData.mobile,
-                  isHosting: geoData.hosting,
-                  actualIP: geoData.query,
-                };
-              } else {
-                //console.warn("⚠️ API retornou falha:", geoData);
-              }
+            if (geoData.status === "success") {
+              locationData = {
+                country: geoData.country,
+                countryCode: geoData.countryCode,
+                region: geoData.regionName,
+                city: geoData.city,
+                zip: geoData.zip,
+                latitude: geoData.lat,
+                longitude: geoData.lon,
+                timezone: geoData.timezone,
+                isp: geoData.isp,
+                organization: geoData.org,
+                asNumber: geoData.as,
+                isProxy: geoData.proxy,
+                isMobile: geoData.mobile,
+                isHosting: geoData.hosting,
+                actualIP: geoData.query,
+              };
             } else {
-              // console.error(
-              //   "❌ Erro na API:",
-              //   geoResponse.status,
-              //   geoResponse.statusText
-              // );
+              //console.warn("⚠️ API retornou falha:", geoData);
             }
-          } else {
-            //console.log("👨‍💻 Ambiente de desenvolvimento detectado (localhost)");
-            // console.log(
-            //   "📝 Para testar a geolocalização, acesse: http://ip-api.com/json/"
-            // );
-            //console.log("📧 Email será enviado sem dados de geolocalização");
           }
         } catch (error) {
           //console.warn("⚠️ Erro ao obter geolocalização:", error);
@@ -118,7 +101,7 @@ const VisitorTracker = () => {
 
         //console.log("Enviando dados para API...");
 
-        // Envia dados para a API (corrigindo o endpoint)
+        // Envia dados para a API
         const response = await fetch("/api/visitor", {
           method: "POST",
           headers: {
@@ -128,21 +111,12 @@ const VisitorTracker = () => {
             ip,
             location: locationData,
             browserInfo,
-            timestamp: new Date(timestamp).toLocaleString("pt-BR", {
-              timeZone: "America/Sao_Paulo",
-              day: "2-digit",
-              month: "2-digit",
-              year: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-              second: "2-digit",
-              hour12: false,
-            }),
+            timestamp: new Date().toISOString(),
           }),
         });
 
         if (!response.ok) {
-          const errorData = await response.json();
+          const errorData = await response.json().catch(() => ({}));
           // throw new Error(
           //   `Erro na API: ${response.status} - ${
           //     errorData.message || errorData.error
