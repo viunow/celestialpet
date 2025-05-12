@@ -3,11 +3,11 @@
 import { useEffect, useRef } from "react";
 
 const VisitorTracker = () => {
-  // const hasTracked = useRef(false);
+  const hasTracked = useRef(false);
 
   useEffect(() => {
     // Evita múltiplas execuções
-    // if (hasTracked.current) return;
+    if (hasTracked.current) return;
 
     const trackVisitor = async () => {
       try {
@@ -22,11 +22,20 @@ const VisitorTracker = () => {
         }
 
         // Verifica se já foi registrado nesta sessão
-        // const tracked = sessionStorage.getItem("visitor_tracked");
-        // if (tracked) {
-        //   //console.log("Visitante já rastreado nesta sessão");
-        //   return;
-        // }
+        const tracked = sessionStorage.getItem("visitor_tracked");
+        const lastTracked = sessionStorage.getItem("last_tracked_time");
+
+        if (tracked && lastTracked) {
+          const currentTime = Date.now();
+          const lastTime = parseInt(lastTracked);
+          const timeDiff = currentTime - lastTime;
+
+          // 2 horas em milissegundos: 2 * 60 * 60 * 1000 = 7200000
+          if (timeDiff < 7200000) {
+            //console.log("Visitante já rastreado nos últimos 2h");
+            return;
+          }
+        }
 
         //console.log("Iniciando tracking do visitante...");
 
@@ -48,7 +57,7 @@ const VisitorTracker = () => {
             // URL da API com os campos específicos
             const fields =
               "status,country,countryCode,regionName,city,zip,lat,lon,timezone,isp,org,proxy,mobile,hosting,as,query";
-            const apiUrl = `http://ip-api.com/json/${ip}?fields=${fields}`;
+            const apiUrl = `https://ip-api.com/json/${ip}?fields=${fields}`;
             //console.log("📞 Chamando API:", apiUrl);
 
             const geoResponse = await fetch(apiUrl);
@@ -125,19 +134,20 @@ const VisitorTracker = () => {
 
         if (!response.ok) {
           const errorData = await response.json();
-          throw new Error(
-            `Erro na API: ${response.status} - ${
-              errorData.message || errorData.error
-            }`
-          );
+          // throw new Error(
+          //   `Erro na API: ${response.status} - ${
+          //     errorData.message || errorData.error
+          //   }`
+          // );
         }
 
         const result = await response.json();
         //console.log("Dados enviados com sucesso!", result);
 
-        // Marca como rastreado nesta sessão
-        // sessionStorage.setItem("visitor_tracked", "true");
-        // hasTracked.current = true;
+        // Marca como rastreado nesta sessão com timestamp
+        sessionStorage.setItem("visitor_tracked", "true");
+        sessionStorage.setItem("last_tracked_time", Date.now().toString());
+        hasTracked.current = true;
       } catch (error) {
         // console.error("Erro ao rastrear visitante:", error);
       }
