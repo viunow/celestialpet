@@ -43,8 +43,8 @@ const Visitor = () => {
           const lastTime = parseInt(lastTracked);
           const timeDiff = currentTime - lastTime;
 
-          // 2 horas em milissegundos: 2 * 60 * 60 * 1000 = 7200000
-          if (timeDiff < 7200000) {
+          // 5 minutos em milissegundos: 5 * 60 * 60 * 1000 = 300000
+          if (timeDiff < 300000) {
             return;
           }
         }
