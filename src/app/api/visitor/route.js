@@ -154,11 +154,6 @@ export async function POST(request) {
           `
               : ""
           }
-          
-          <hr style="margin: 20px 0;">
-          <p style="color: #666; font-size: 12px;">
-            Este email foi gerado automaticamente pelo sistema de monitoramento do site Celestial Pet.
-          </p>
         </body>
       </html>
     `;
