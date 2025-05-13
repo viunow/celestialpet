@@ -1,3 +1,5 @@
+import { NextResponse } from "next/server";
+
 // middleware.js
 export function middleware(request) {
   const response = NextResponse.next();

@@ -61,7 +61,7 @@ const Services = () => {
   return (
     <section id="servicos" className="py-16 md:py-24 bg-celestial-blue">
       <div className="celestial-container">
-        <motion.div
+        <div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -71,11 +71,11 @@ const Services = () => {
         >
           <h2 className="section-title text-center mx-auto">Nossos Serviços</h2>
           <div className="w-24 h-1 bg-celestial-brown mx-auto mt-2 mb-6"></div>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {services.map((service, index) => (
-            <motion.div
+            <div
               key={index}
               initial="hidden"
               whileInView="visible"
@@ -96,7 +96,7 @@ const Services = () => {
 
                   <p className="mb-4 flex-grow">{service.description}</p>
 
-                  <motion.div
+                  <div
                     initial={{ height: 0, opacity: 0 }}
                     whileInView={{ height: "auto", opacity: 1 }}
                     transition={{ duration: 0.3 }}
@@ -113,10 +113,10 @@ const Services = () => {
                         </li>
                       ))}
                     </ul>
-                  </motion.div>
+                  </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

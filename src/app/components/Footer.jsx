@@ -9,19 +9,19 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-celestial-blue py-12">
+    <footer className="bg-celestial-blue pt-12">
       <div className="celestial-container">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <Logo />
-            <p className="text-celestial-brown my-4 max-w-xs">
+            <p className="text-celestial-brown my-4 max-w-xs font-semibold">
               Traduzindo sentimentos e cuidado em homenagens!
               <br />
             </p>
           </div>
 
           <div>
-            <h4 className="font-playfair text-xl text-celestial-brown mb-4">
+            <h4 className="font-playfair text-xl text-celestial-brown mb-4 font-semibold">
               Links Rápidos
             </h4>
             <ul className="space-y-2">
@@ -61,7 +61,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-playfair text-xl text-celestial-brown mb-4">
+            <h4 className="font-playfair text-xl text-celestial-brown mb-4 font-semibold">
               Contato
             </h4>
             <ul className="space-y-3">
@@ -122,10 +122,21 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-white/20 mt-8 pt-8 text-center">
+        <div className="border-t border-white/20 mt-8 pt-8 text-center font-semibold">
           <p className="text-celestial-brown">
             © {year} Celestial Pet. Todos os direitos reservados.
           </p>
+        </div>
+        <div className="w-full text-center text-xs my-2 text-slate-500">
+          Desenvolvido por{" "}
+          <Link
+            href="https://www.viniciusneto.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-celestial-brown transition-colors"
+          >
+            @viniciusneto.dev
+          </Link>
         </div>
       </div>
     </footer>
